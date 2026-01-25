@@ -8,6 +8,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const connectTodb = require("./db/db");
 const userRoutes = require("./routes/user.routes");
+const captionRoutes = require("./routes/caption.routes");
 
 app.use(cors());
 app.use(express.json());
@@ -18,5 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRoutes);
+
+app.use("/captions", captionRoutes);
 
 module.exports = app;
