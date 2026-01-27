@@ -2,6 +2,7 @@ const captionController = require("../controllers/caption.controller");
 const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
+const authMiddleware = require("../middlewares/auth.middleware");
 
 router.post(
   "/register",
@@ -30,6 +31,14 @@ router.post(
   ],
 
   captionController.registerCaption,
+);
+
+router.post("/login", captionController.loginCaption);
+
+router.post(
+  "/logout",
+  authMiddleware.authCaption,
+  captionController.logoutCaption,
 );
 
 module.exports = router;

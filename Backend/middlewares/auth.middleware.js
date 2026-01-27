@@ -1,12 +1,13 @@
 const blackListTokenModel = require("../models/blacklistToken.model");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
+const captionModel = require("../models/caption.model");
 
 module.exports.authUser = async (req, res, next) => {
   try {
     let token;
 
-    // 1️⃣ Get token from header
+    // Get token from header
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer ")
@@ -14,23 +15,23 @@ module.exports.authUser = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
     }
 
-    // 2️⃣ Get token from cookies
+    // Get token from cookies
     if (!token && req.cookies?.token) {
       token = req.cookies.token;
     }
 
-    // 3️⃣ No token → Unauthorized
+    // No token → Unauthorized
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    // 4️⃣ Check blacklist (AFTER token exists)
+    // Check blacklist (AFTER token exists)
     const isBlacklisted = await blackListTokenModel.findOne({ token });
     if (isBlacklisted) {
       return res.status(401).json({ message: "Token expired" });
     }
 
-    // 5️⃣ Verify token
+    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await userModel.findById(decoded._id);
@@ -39,7 +40,36 @@ module.exports.authUser = async (req, res, next) => {
     }
 
     req.user = user;
-    req.token = token; // 👈 VERY IMPORTANT
+    req.token = token;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
+module.exports.authCaption = async (req, res, next) => {
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const isBlacklisted = await blackListTokenModel.findOne({ token });
+
+  if (isBlacklisted) {
+    return res.status(401).json({ message: "Token expired" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const caption = await captionModel.findById(decoded._id);
+
+    if (!caption) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    req.caption = caption;
+    req.token = token;
     next();
   } catch (err) {
     return res.status(401).json({ message: "Unauthorized" });
