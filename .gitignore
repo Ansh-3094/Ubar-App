@@ -1,2 +1,8 @@
+.gitignore
 .env
 node_modules
+images
+package.json
+package-lock.json
+vite.config.js
+vite.svg
