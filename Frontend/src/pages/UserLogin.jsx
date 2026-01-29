@@ -51,7 +51,7 @@ const UserLogin = () => {
               placeholder="Enter Your Password"
             />
 
-            <button className="bg-[#111] text-white font-semibold mb-7 rounded px-4 py-3 w-full text-lg placeholder:text-base transition-all duration-200 ease-out hover:bg-neutral-800 hover:shadow-md active:scale-[0.98] h-12">
+            <button className="bg-[#111] text-white cursor-pointer font-semibold mb-7 rounded px-4 py-3 w-full text-lg placeholder:text-base transition-all duration-200 ease-out hover:bg-neutral-800 hover:shadow-md active:scale-[0.98] h-12">
               Login
             </button>
           </form>
