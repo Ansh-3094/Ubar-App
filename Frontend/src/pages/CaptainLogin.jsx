@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,7 +8,7 @@ const CaptainLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { captainData, setCaptainData } = useState();
+  const [captainData, setCaptainData] = useState();
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -90,7 +90,7 @@ const CaptainLogin = () => {
           to="/login"
           className="bg-amber-600 flex items-center justify-center text-white font-semibold mb-5 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base hover:bg-[#dd9c2c]"
         >
-          Sign in as Caption
+          Sign in as Captain
         </Link>
       </div>
     </div>
