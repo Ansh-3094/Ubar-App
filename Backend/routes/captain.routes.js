@@ -32,7 +32,11 @@ router.post(
 
   captainController.registerCaptain,
 );
-
+router.get(
+  "/profile",
+  authMiddleware.authCaptain,
+  captainController.getCaptainProfile,
+);
 router.post("/login", captainController.loginCaptain);
 
 router.post(
