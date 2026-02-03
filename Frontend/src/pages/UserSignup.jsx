@@ -19,7 +19,7 @@ const UserSignup = () => {
     e.preventDefault();
 
     const newUser = {
-      fullnme: {
+      fullname: {
         firstname: firstName,
         lastname: lastName,
       },
@@ -35,6 +35,7 @@ const UserSignup = () => {
     if (response.status === 201) {
       const data = response.data;
       setUserData(data.user);
+      localStorage.setItem("token", data.token);
       navigate("/home");
     }
     setEmail("");
