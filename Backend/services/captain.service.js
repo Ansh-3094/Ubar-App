@@ -1,6 +1,6 @@
-const captionModel = require("../models/caption.model");
+const captainModel = require("../models/captain.model");
 
-module.exports.createCaption = async ({
+module.exports.createCaptain = async ({
   firstname,
   lastname,
   email,
@@ -23,7 +23,7 @@ module.exports.createCaption = async ({
     throw new Error("All fields are required");
   }
 
-  const caption = await captionModel.create({
+  const captain = await captainModel.create({
     fullname: {
       firstname,
       lastname,
@@ -37,5 +37,5 @@ module.exports.createCaption = async ({
       vehicleType,
     },
   });
-  return caption;
+  return captain;
 };

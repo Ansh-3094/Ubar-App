@@ -1,4 +1,4 @@
-const captionController = require("../controllers/caption.controller");
+const captainController = require("../controllers/captain.controller");
 const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
@@ -30,15 +30,15 @@ router.post(
       .withMessage("Invalid vehicle type"),
   ],
 
-  captionController.registerCaption,
+  captainController.registerCaptain,
 );
 
-router.post("/login", captionController.loginCaption);
+router.post("/login", captainController.loginCaptain);
 
 router.post(
   "/logout",
-  authMiddleware.authCaption,
-  captionController.logoutCaption,
+  authMiddleware.authCaptain,
+  captainController.logoutCaptain,
 );
 
 module.exports = router;
