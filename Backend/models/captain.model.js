@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const captainSchema = new mongoose.Schema({
+const captionSchema = new mongoose.Schema({
   fullname: {
     firstname: {
       type: String,
@@ -71,22 +71,22 @@ const captainSchema = new mongoose.Schema({
   },
 });
 
-captainSchema.methods.generateAuthToken = function () {
+captionSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
     expiresIn: "24h",
   });
   return token;
 };
 
-captainSchema.methods.comparePassword = async function (password) {
+captionSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-captainSchema.pre("save", async function () {
+captionSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-const captainModel = mongoose.model("captain", captainSchema);
+const captionModel = mongoose.model("caption", captionSchema);
 
-module.exports = captainModel;
+module.exports = captionModel;
